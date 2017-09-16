@@ -28,4 +28,10 @@ class UploadImageController extends ApiController
             'imgPost'=>$imgPost
         ]);
     }
+    public function display(Request $request) {
+        $imgPosts = ImgPosts::orderBy('created_at', 'desc')->get();
+        return $this->respondSuccess([
+            'img_posts'=>$imgPosts
+        ]);
+    }
 }
