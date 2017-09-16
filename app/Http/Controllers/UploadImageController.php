@@ -12,9 +12,10 @@ class UploadImageController extends ApiController
     //
     public function upload(Request $request)
     {
-        if($request->file == null)
-            return $this->respondFail(['message' => "quen browse anh rui"]);
+
         $photo = $request->file('photo');
+        if($photo == null)
+            return $this->respondFail(['message' => "quen browse anh rui"]);
         $destinationPath = base_path() . '/public/uploads/images/';
         $photoName = "http://".config("app.domain")."/uploads/images/".time().md5($photo->getClientOriginalName()).".".$photo->getClientOriginalExtension();
         $photo->move($destinationPath, $photoName);
@@ -23,6 +24,8 @@ class UploadImageController extends ApiController
         $imgPost->user_id = Auth::id();
         $imgPost->img_url = $photoName;
         $imgPost->save();
-        return $this->respondSuccess(['messgae' => "dang anh thanh cong"]);
+        return $this->respondSuccess([
+            'imgPost'=>$imgPost
+        ]);
     }
 }
