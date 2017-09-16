@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 //Route::get('/home', 'HomeController@index');
 Route::group(['domain' => "api." .config("app.domain")], function () {
     Route::post('/register-user', 'RegisterController@reg');
+    Route::post('/login-user', 'LoginController@log');
 });
 
 
