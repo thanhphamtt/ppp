@@ -14,9 +14,12 @@ use Illuminate\Http\Request;
 //Route::auth();
 //
 //Route::get('/home', 'HomeController@index');
+Route::group(['domain' => "api." .config("app.domain")], function () {
+    Route::post('/register-user', 'RegisterController@reg');
+});
+
 
 Route::get('/','PostController@index')->middleware('logined');
-Route::get('/ppp','PostController@ppp');
 Route::post('/post','PostController@store')->middleware('logined');
 Route::delete('/post/{post_id}','PostController@deletePost')->middleware('lead_post');
 Route::get('/post/{post_id}','PostController@postDetail')->middleware('lead_post');
@@ -27,4 +30,4 @@ Route::post('/post/{post_id}/comment','CommentController@storeComment')->middlew
 Route::delete('/post/{post_id}/comment/{comment_id}','CommentController@deleteComment')->middleware('lead_comment_post');
 Route::get('/post/{post_id}/comment/{comment_id}','CommentController@commentDetail')->middleware('lead_comment');
 Route::post('/post/{post_id}/comment/{comment_id}','CommentController@editComment')->middleware('lead_comment');
-Route::auth();
+//Route::auth();
