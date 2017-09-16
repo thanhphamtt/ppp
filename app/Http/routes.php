@@ -17,7 +17,7 @@ use Illuminate\Http\Request;
 Route::group(['domain' => "api." .config("app.domain")], function () {
     Route::post('/register-user', 'RegisterController@reg');
     Route::post('/login-user', 'LoginController@log');
-    Route::post('/img-data', 'UploadImageController@display');
+
 });
 Route::group(['domain' => "api." .config("app.domain"), 'middleware' => ['jwt.auth']], function () {
     Route::post('upload','UploadImageController@upload');
