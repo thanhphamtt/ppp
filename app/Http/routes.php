@@ -20,8 +20,10 @@ Route::group(['domain' => "api." .config("app.domain")], function () {
 
 });
 Route::group(['domain' => "api." .config("app.domain"), 'middleware' => ['jwt.auth']], function () {
-    //Route::get('ppp','LoginController@ppp');
     Route::post('upload','UploadImageController@upload');
+    Route::get('/img-data', 'UploadImageController@display');
+    Route::post('/upload/{imgPost_id}','ImgCommentController@upComment');
+
 });
 
 
