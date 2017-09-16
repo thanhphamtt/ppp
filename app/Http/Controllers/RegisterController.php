@@ -11,7 +11,11 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class RegisterController extends ApiController
 {
-    //
+    /**
+     *
+     * @param Request $request
+     * @return array
+     */
     public function reg(Request $request){
         if ($request->name== null || $request->email==null || $request->password==null)
             return $this->respondFail(['message'=> "thieu truong name hoac email hoac password ban oi"]);
