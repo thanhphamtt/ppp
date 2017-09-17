@@ -3,17 +3,7 @@
 use App\Task;
 use Illuminate\Http\Request;
 
-//Route::get('/', 'CourseController@courses');
-//Route::post('/course','CourseController@store');
-//Route::delete('/course/{course_id}', 'CourseController@deleteCourse');
-//Route::post('/course/{course_id}', 'CourseController@editCourse');
-//Route::get('/course/{course_id}','CourseController@simpleDetail');
-//Route::get('/course/{course_id}/creat_class','ClassController@creatClass')->middleware('logined');
-//Route::post('/course/{course_id}/class','ClassController@storeClass');
-//Route::delete('/course/{course_id}/class/{class_id}','ClassController@deleteClass');
-//Route::auth();
-//
-//Route::get('/home', 'HomeController@index');
+
 Route::group(['domain' => "api." .config("app.domain")], function () {
     Route::post('/register-user', 'RegisterController@reg');
     Route::post('/login-user', 'LoginController@log');
