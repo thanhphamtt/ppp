@@ -13,11 +13,11 @@ class ImgCommentController extends ApiController
 {
     //
     public function upComment($img_id,Request $request){
-        if($request->content ==null) return $this->respondFail(['message' => "them mo ta di"]);
+        if($request->post_content ==null) return $this->respondFail(['message' => "them mo ta di"]);
         $imgC= new ImgComments;
         $imgC->post_id= $img_id;
         $imgC->user_id=Auth::id();
-        $imgC->content=$request->content;
+        $imgC->content=$request->post_content;
         $imgC->save();
         return $this->respondSuccess([
             'imgC'=>$imgC,
