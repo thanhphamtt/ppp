@@ -10,10 +10,10 @@ class ApiController extends Controller
 {
     //
     private function respond($status,$data){
-        return [
+        return response()->json([
             "status" => $status,
             "data" => $data
-        ];
+        ],200);
     }
 
     public function respondSuccess($data){
