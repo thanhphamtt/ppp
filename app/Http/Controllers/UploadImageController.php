@@ -29,9 +29,9 @@ class UploadImageController extends ApiController
         ]);
     }
     public function display(Request $request) {
-        $imgPosts = ImgPosts::orderBy('created_at', 'desc')->get();
+        $imgPosts = ImgPosts::orderBy('created_at', 'desc')->take(10)->skip(($request->page_id-1)*10)->get();
         return $this->respondSuccess([
-            'img_posts'=>$imgPosts
+            'img_posts'=>$imgPosts,
         ]);
     }
 }

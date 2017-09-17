@@ -11,10 +11,9 @@ Route::group(['domain' => "api." .config("app.domain")], function () {
 });
 Route::group(['domain' => "api." .config("app.domain"), 'middleware' => ['jwt.auth']], function () {
     Route::post('upload','UploadImageController@upload');
-    Route::get('/img-data', 'UploadImageController@display');
     Route::post('/upload/{img_id}','ImgCommentController@upComment');
     Route::get('/imgC-data', 'ImgCommentController@displayComment');
-
+    Route::get('/page', 'UploadImageController@display');
 });
 
 
