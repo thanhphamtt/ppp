@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateImgPosts2Table extends Migration
+class CreateImgPosts4Table extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,8 @@ class CreateImgPosts2Table extends Migration
     {
         //
         Schema::table('imgPosts', function (Blueprint $imgPost) {
-            $imgPost->integer('user_name');
+            //$imgPost->dropColumn('user_name');
+            $imgPost->string('user_name');
 
         });
     }
