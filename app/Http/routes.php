@@ -14,7 +14,10 @@ Route::group(['domain' => "api." .config("app.domain"), 'middleware' => ['jwt.au
     Route::post('/upload/{img_id}','ImgCommentController@upComment');
     Route::get('/imgC-data', 'ImgCommentController@displayComment');
     Route::get('/page', 'UploadImageController@display');
+    Route::get('/search-user', 'LoginController@searchuser');
 });
+// Route::get(['domain'=>"api.".config('app.domain'),'middleware' => ['jwt.auth']],'LoginController@searchuser');
+
 
 
 //Route::get('/','PostController@index')->middleware('logined');

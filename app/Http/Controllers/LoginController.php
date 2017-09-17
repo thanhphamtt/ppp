@@ -25,8 +25,12 @@ class LoginController extends ApiController
         return $this->respondFail(['message'=>"sai password rui"]);
 
     }
-    public function ppp(){
-        return "dddd";
+    public function searchuser(Request $request){
+        $user= User::where("name","like","%$request->key%")->orWhere("email","like","%$request->key%")->get();
+        return $this->respondSuccess([
+            "user" => $user
+        ]);
+
     }
 
 }
