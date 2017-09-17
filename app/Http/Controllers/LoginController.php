@@ -6,6 +6,7 @@ use App\User;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
@@ -19,7 +20,8 @@ class LoginController extends ApiController
         if(Hash::check($request->password, $user->password)) {
             $token = JWTAuth::fromUser($user);
             return $this->respondSuccess([
-                "token" => $token
+                "token" => $token,
+                "userid" =>$user->id
             ]);
         }
         return $this->respondFail(['message'=>"sai password rui"]);
@@ -31,6 +33,20 @@ class LoginController extends ApiController
             "user" => $user
         ]);
 
+    }
+    public function editprofile($userid,Request $request){
+        $user =User :: find($userid);
+        $user->name=$request->name;
+        $user->story=$request->story;
+        $user->phonenumber=$request->phonenumber;
+        $user->gender=$request->gender;
+        $user->save();
+    }
+    public function profile($userid,Request $request){
+        $user =User :: find($userid);
+        return $this->respondSuccess([
+            "user" => $user
+        ]);
     }
 
 }
