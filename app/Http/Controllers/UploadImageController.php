@@ -16,7 +16,7 @@ class UploadImageController extends ApiController
         $photo = $request->file('photo');
         if($photo == null)
             return $this->respondFail(['message' => "quen browse anh rui"]);
-        $destinationPath = base_path() . '/public/uploads/images/';
+        $destinationPath = base_path() pul. '/public/uploads/images/';
         $photoName = "http://".config("app.domain")."/uploads/images/".time().md5($photo->getClientOriginalName()).".".$photo->getClientOriginalExtension();
         $photo->move($destinationPath, $photoName);
         $imgPost = new ImgPosts;
