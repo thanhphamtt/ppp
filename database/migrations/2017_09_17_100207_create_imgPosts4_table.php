@@ -16,7 +16,6 @@ class CreateImgPosts4Table extends Migration
         Schema::table('imgPosts', function (Blueprint $imgPost) {
             //$imgPost->dropColumn('user_name');
             $imgPost->string('user_name');
-
         });
     }
 

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateImgPosts3Table extends Migration
+class CreateUsers2Table extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class CreateImgPosts3Table extends Migration
     public function up()
     {
         //
-        Schema::table('imgPosts', function (Blueprint $imgPost) {
-            $imgPost->string('user_name');
-            $imgPost->dropColumn('user_name');
-            //$imgPost->string('user_name');
-
+        Schema::table('users', function (Blueprint $table){
+            $table->string('avt_url');
         });
     }
 
