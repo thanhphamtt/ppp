@@ -15,7 +15,7 @@ Route::group(['domain' => "api." .config("app.domain"), 'middleware' => ['jwt.au
     Route::get('/imgC-data', 'ImgCommentController@displayComment');
     Route::get('/page', 'UploadImageController@display');
     Route::get('/search-user', 'LoginController@searchuser');
-    Route::post('/like/{img_id}','UploadImageController@like');
+    Route::post('/like/{img_id}/{user_id}','UploadImageController@like');
     Route::post('/editprofile/{userid}','LoginController@editprofile');
     Route::get('/profile/{userid}','LoginController@profile');
 });

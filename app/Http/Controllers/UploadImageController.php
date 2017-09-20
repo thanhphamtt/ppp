@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\ImgPosts;
+use App\Postlike;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -39,9 +40,17 @@ class UploadImageController extends ApiController
 
         ]);
     }
-    public function like($img_id,Request $request){
-        $imgPost= ImgPosts :: find($img_id);
-        $imgPost->like=$request->like;
+    public function like($img_id,$user_id,Request $request){
+        $Post= Postlike :: where("post_id",$img_id)->where("user_id",$user_id)->first();
+        //dd($Post->post_id);
+        $imgPost= ImgPosts::find($img_id);
+        if($Post){ $imgPost->like=$imgPost->like-1;$Post->delete();}
+        else {$imgPost->like=$imgPost->like+1;
+         $post1= new Postlike;
+         $post1->post_id=$img_id;
+         $post1->user_id=$user_id;
+         $post1->save();
+        }
         $imgPost->save();
 
     }
