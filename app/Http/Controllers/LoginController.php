@@ -37,11 +37,12 @@ class LoginController extends ApiController
     public function editprofile($userid,Request $request){
         $user =User :: find($userid);
         $photo = $request->file('photo');
+        if($photo == null){
+            $photoName = "chua co avt";} else{
         $destinationPath = base_path() . '/public/uploads/images/';
-        $photoName = "http://".config("app.domain")."/uploads/images/".time().md5($photo->getClientOriginalName()).".".$photo->getClientOriginalExtension();
+        $photoName = "http://".config("app.domain")."/uploads/images/".time().md5($photo->getClientOriginalName()).".".$photo->getClientOriginalExtension();}
         $photo->move($destinationPath, $photoName);
-        if($photo == null)
-            $photoName = "chua co avt";
+
         $user->name=$request->name;
         $user->story=$request->story;
         $user->phonenumber=$request->phonenumber;
