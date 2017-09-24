@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\ImgComments;
 use App\ImgPosts;
 use App\Postlike;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests;
+use function PHPSTORM_META\map;
 
 class UploadImageController extends ApiController
 {
@@ -36,8 +38,12 @@ class UploadImageController extends ApiController
     public function display(Request $request)
     {
         $imgPosts = ImgPosts::orderBy('created_at', 'desc')->take(10)->skip(($request->page_id - 1) * 10)->get();
+//        $posts = $imgPosts->map(function($post){
+//           return $post->transform();
+//        });
         return $this->respondSuccess([
             'img_posts' => $imgPosts,
+
         ]);
     }
 
@@ -64,5 +70,18 @@ class UploadImageController extends ApiController
                 "like_count" => $imgPost->like
             ]);
         }
+    }
+    public function deletePost($post_id, $user_id, Request $request) {
+        $post = ImgPosts::find($post_id);
+        if($post->user_id != $user_id)
+            return $this->respondFail([
+               "message" => "watttt"
+            ]);
+//        $cmts = $post->comments;
+//        $cmts->delete();
+        $post->delete();
+        return $this->respondSuccess([
+            "message" => "ok"
+        ]);
     }
 }
