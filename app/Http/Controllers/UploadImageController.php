@@ -40,18 +40,28 @@ class UploadImageController extends ApiController
 
         ]);
     }
-    public function like($img_id,$user_id,Request $request){
+    public function likeUnlike($img_id,$user_id,Request $request){
         $Post= Postlike :: where("post_id",$img_id)->where("user_id",$user_id)->first();
         //dd($Post->post_id);
         $imgPost= ImgPosts::find($img_id);
-        if($Post){ $imgPost->like=$imgPost->like-1;$Post->delete();}
-        else {$imgPost->like=$imgPost->like+1;
-         $post1= new Postlike;
-         $post1->post_id=$img_id;
-         $post1->user_id=$user_id;
-         $post1->save();
+        if($Post) {
+            $imgPost->like=$imgPost->like-1;
+            $Post->delete();
+            $imgPost->save();
+            return $this->respondSuccess([
+                "like_count"=> $imgPost->like
+            ]);
         }
-        $imgPost->save();
-
+        else {
+            $imgPost->like=$imgPost->like+1;
+            $post1= new Postlike;
+            $post1->post_id=$img_id;
+            $post1->user_id=$user_id;
+            $post1->save();
+            $imgPost->save();
+            return $this->respondSuccess([
+                "like_count"=> $imgPost->like
+            ]);
+        }
     }
 }
