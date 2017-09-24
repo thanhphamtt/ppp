@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\ImgPosts;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -43,7 +44,7 @@ class LoginController extends ApiController
         $destinationPath = base_path() . '/public/uploads/images/';
         $photoName = "http://".config("app.domain")."/uploads/images/".time().md5($photo->getClientOriginalName()).".".$photo->getClientOriginalExtension();
         $photo->move($destinationPath, $photoName);
-        }
+      }
 
         $user->name=$request->name;
         $user->story=$request->story;
