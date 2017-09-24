@@ -39,18 +39,22 @@ class LoginController extends ApiController
         $user =User :: find($userid);
         $photo = $request->file('photo');
         if($photo == null){
-            $photoName = "chua co avt";} else{
+            $photoName = "chua co avt";}
+            else{
         $destinationPath = base_path() . '/public/uploads/images/';
         $photoName = "http://".config("app.domain")."/uploads/images/".time().md5($photo->getClientOriginalName()).".".$photo->getClientOriginalExtension();
         $photo->move($destinationPath, $photoName);
-        $user->avt_url = $photoName;
-        }
+      }
+
         $user->name=$request->name;
         $user->story=$request->story;
         $user->phonenumber=$request->phonenumber;
         $user->gender=$request->gender;
         $user->avt_url = $photoName;
         $user->save();
+        return $this->respondSuccess([
+            "p" => 1
+        ]);
     }
     public function profile($userid,Request $request){
         $user =User :: find($userid);
