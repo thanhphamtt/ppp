@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\ImgPosts;
 use App\User;
 use Illuminate\Http\Request;
 
