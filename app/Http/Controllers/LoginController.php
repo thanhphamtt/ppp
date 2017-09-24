@@ -41,9 +41,10 @@ class LoginController extends ApiController
         if($photo == null){
             $photoName = "chua co avt";} else{
         $destinationPath = base_path() . '/public/uploads/images/';
-        $photoName = "http://".config("app.domain")."/uploads/images/".time().md5($photo->getClientOriginalName()).".".$photo->getClientOriginalExtension();}
+        $photoName = "http://".config("app.domain")."/uploads/images/".time().md5($photo->getClientOriginalName()).".".$photo->getClientOriginalExtension();
         $photo->move($destinationPath, $photoName);
-
+        $user->avt_url = $photoName;
+        }
         $user->name=$request->name;
         $user->story=$request->story;
         $user->phonenumber=$request->phonenumber;
