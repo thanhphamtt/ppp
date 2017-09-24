@@ -4,23 +4,23 @@ use App\Task;
 use Illuminate\Http\Request;
 
 
-Route::group(['domain' => "api." .config("app.domain")], function () {
+Route::group(['domain' => "api." . config("app.domain")], function () {
     Route::post('/register-user', 'RegisterController@reg');
     Route::post('/login-user', 'LoginController@log');
 
 });
-Route::group(['domain' => "api." .config("app.domain"), 'middleware' => ['jwt.auth']], function () {
-    Route::post('upload','UploadImageController@upload');
-    Route::post('/upload/{img_id}','ImgCommentController@upComment');
+Route::group(['domain' => "api." . config("app.domain"), 'middleware' => ['jwt.auth']], function () {
+    Route::post('upload', 'UploadImageController@upload');
+    Route::post('/upload/{img_id}', 'ImgCommentController@upComment');
     Route::get('/imgC-data', 'ImgCommentController@displayComment');
     Route::get('/page', 'UploadImageController@display');
     Route::get('/search-user', 'LoginController@searchuser');
-    Route::post('/like/{img_id}/{user_id}','UploadImageController@likeUnlike');
-    Route::post('/editprofile/{userid}','LoginController@editprofile');
-    Route::get('/profile/{userid}','LoginController@profile');
+    Route::post('/like/{img_id}/{user_id}', 'UploadImageController@likeUnlike');
+    Route::post('/editprofile/{userid}', 'LoginController@editprofile');
+    Route::delete('/deletepost/{post_id}/{user_id}', 'UploadImageController@deletePost');
+    Route::get('/profile/{userid}', 'LoginController@profile');
 });
 // Route::get(['domain'=>"api.".config('app.domain'),'middleware' => ['jwt.auth']],'LoginController@searchuser');
-
 
 
 //Route::get('/','PostController@index')->middleware('logined');
