@@ -29,4 +29,14 @@ class ImgCommentController extends ApiController
             'img_comments'=>$imgComments
         ]);
     }
+    public function deletecmt($cmt_id,$user_id,Request $request){
+        $cmt= ImgComments::find($cmt_id);
+        if($cmt->user_id != $user_id) return $this->respondFail([
+            "pp" => "lao vc"
+        ]);
+        $cmt->delete();
+        return $this->respondSuccess([
+            'p'=>1
+        ]);
+    }
 }
