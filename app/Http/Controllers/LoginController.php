@@ -21,7 +21,7 @@ class LoginController extends ApiController
             $token = JWTAuth::fromUser($user);
             return $this->respondSuccess([
                 "token" => $token,
-                "userid" =>$user->id
+                "user" =>$user,
             ]);
         }
         return $this->respondFail(['message'=>"sai password rui"]);
