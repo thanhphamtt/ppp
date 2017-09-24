@@ -67,12 +67,4 @@ class UploadImageController extends ApiController
             ]);
         }
     }
-
-    public function like($img_id, Request $request)
-    {
-        $imgPost = ImgPosts::find($img_id);
-        return $this->respondSuccess([
-            "like_count" => $imgPost->like
-        ]);
-    }
 }
