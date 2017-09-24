@@ -16,52 +16,63 @@ class UploadImageController extends ApiController
     {
 
         $photo = $request->file('photo');
-        if($photo == null)
+        if ($photo == null)
             return $this->respondFail(['message' => "quen browse anh rui"]);
         $destinationPath = base_path() . '/public/uploads/images/';
-        $photoName = "http://".config("app.domain")."/uploads/images/".time().md5($photo->getClientOriginalName()).".".$photo->getClientOriginalExtension();
+        $photoName = "http://" . config("app.domain") . "/uploads/images/" . time() . md5($photo->getClientOriginalName()) . "." . $photo->getClientOriginalExtension();
         $photo->move($destinationPath, $photoName);
         $imgPost = new ImgPosts;
-        $imgPost->description=$request->description;
+        $imgPost->description = $request->description;
         $imgPost->user_id = Auth::id();
-        $user=User::find($imgPost->user_id);
-        $imgPost->user_name=$user->name;
+        $user = User::find($imgPost->user_id);
+        $imgPost->user_name = $user->name;
         $imgPost->img_url = $photoName;
         $imgPost->save();
         return $this->respondSuccess([
-            'imgPost'=>$imgPost
+            'imgPost' => $imgPost
         ]);
     }
-    public function display(Request $request) {
-        $imgPosts = ImgPosts::orderBy('created_at', 'desc')->take(10)->skip(($request->page_id-1)*10)->get();
+
+    public function display(Request $request)
+    {
+        $imgPosts = ImgPosts::orderBy('created_at', 'desc')->take(10)->skip(($request->page_id - 1) * 10)->get();
 
         return $this->respondSuccess([
-            'img_posts'=>$imgPosts,
+            'img_posts' => $imgPosts,
 
         ]);
     }
-    public function likeUnlike($img_id,$user_id,Request $request){
-        $Post= Postlike :: where("post_id",$img_id)->where("user_id",$user_id)->first();
+
+    public function likeUnlike($img_id, $user_id, Request $request)
+    {
+        $Post = Postlike:: where("post_id", $img_id)->where("user_id", $user_id)->first();
         //dd($Post->post_id);
-        $imgPost= ImgPosts::find($img_id);
-        if($Post) {
-            $imgPost->like=$imgPost->like-1;
+        $imgPost = ImgPosts::find($img_id);
+        if ($Post) {
+            $imgPost->like = $imgPost->like - 1;
             $Post->delete();
             $imgPost->save();
             return $this->respondSuccess([
-                "like_count"=> $imgPost->like
+                "like_count" => $imgPost->like
             ]);
-        }
-        else {
-            $imgPost->like=$imgPost->like+1;
-            $post1= new Postlike;
-            $post1->post_id=$img_id;
-            $post1->user_id=$user_id;
+        } else {
+            $imgPost->like = $imgPost->like + 1;
+            $post1 = new Postlike;
+            $post1->post_id = $img_id;
+            $post1->user_id = $user_id;
             $post1->save();
             $imgPost->save();
             return $this->respondSuccess([
-                "like_count"=> $imgPost->like
+                "like_count" => $imgPost->like
             ]);
         }
+    }
+
+    public function like($img_id, Request $request)
+    {
+        $imgPost = ImgPosts::find($img_id);
+        return $this->respondSuccess([
+            "like_count" => $imgPost->like
+        ]);
     }
 }
